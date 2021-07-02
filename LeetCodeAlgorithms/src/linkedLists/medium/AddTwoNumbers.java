@@ -1,4 +1,4 @@
-package easy;
+package linkedLists.medium;
 
 public class AddTwoNumbers {
 
