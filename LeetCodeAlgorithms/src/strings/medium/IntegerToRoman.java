@@ -6,7 +6,7 @@ import java.util.List;
 public class IntegerToRoman {
 
 	public static void main(String[] args) {
-		int[] nums = { 1, 2, 3, 4, 5, 6 };
+		int[] nums = { 1, 2, 3, 4, 5, 6,  };
 		IntegerToRoman itr = new IntegerToRoman();
 		for (int num : nums) {
 			System.out.println(num + " -- " + itr.intToRoman(num));
