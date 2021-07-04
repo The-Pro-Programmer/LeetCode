@@ -1,6 +1,6 @@
 package design.easy;
 
-import java.util.Arrays;
+import java.util.Stack;
 
 public class MinStack {
 
@@ -34,43 +34,37 @@ public class MinStack {
 	}
 
 	/** initialize your data structure here. */
-	int stackSize = 5;
-	int[] stack = null;
+	Stack<Integer> stack = null;
 	int currentIndex = -1;
+	boolean refresh = true;
+	int min = 0;
 
 	public MinStack() {
-		stack = new int[stackSize];
+		stack = new Stack<>();
 	}
 
 	public void push(int val) {
-		if (currentIndex < stackSize-1) {
-			currentIndex++;
-			stack[currentIndex] = val;
-		} else {
-			int newStackSize = stackSize + (stackSize / 2);
-			int backup[] = stack;
-			stack = new int[newStackSize];
-			int i = 0;
-			for (; i < stackSize; i++) {
-				stack[i] = backup[i];
-			}
-			stack[i] = val;
-			stackSize = newStackSize;
-			currentIndex = i;
-		}
+		stack.push(val);
+		currentIndex++;
+		refresh = true;
 	}
 
 	public void pop() {
+		stack.pop();
 		currentIndex--;
+		refresh = true;
 	}
 
 	public int top() {
-		return stack[currentIndex];
+		return stack.peek();
 	}
 
 	public int getMin() {
-		int[] temp = Arrays.copyOfRange(stack, 0, currentIndex+1); 
-		return Arrays.stream(temp).min().getAsInt();
+		if(refresh) {
+			min = stack.stream().min(Integer::compare).get();
+			refresh = false;
+		}
+		return min;
 	}
 	
 	public void print() {
