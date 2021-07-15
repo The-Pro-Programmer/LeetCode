@@ -1,32 +1,38 @@
 package arrays.medium;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Arrays;
 
 public class ValidTraingleNumber {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		ValidTraingleNumber obj = new ValidTraingleNumber();
+		System.out.println(obj.triangleNumber(new int[] {}));
+		System.out.println(obj.triangleNumber(new int[] { 4, 6, 3, 7 }));
+		System.out.println(obj.triangleNumber(new int[] { 10, 21, 22, 100, 101, 200, 300 }));
 
 	}
 
 	public int triangleNumber(int[] nums) {
-		if(nums==null || nums.length<3) {
+		if (nums == null || nums.length < 3) {
 			return 0;
 		}
-		if(nums.length==3) {
-			int sum = nums[0] + nums[1];
-			if(sum>nums[2]) {
-				return 1;
-			}
-			return 0;
-		}
-		List<List<Integer>> triangles = new LinkedList();
 		int n = nums.length;
-		for(int i=0; i<n-2; i++) {
-			
+		Arrays.sort(nums);
+
+		int count = 0;
+
+		for (int i = n - 1; i >= 1; i--) {
+			int l = 0, r = i - 1;
+			while (l < r) {
+				if (nums[l] + nums[r] > nums[i]) {
+					count += r - l;
+					r--;
+				} else {
+					l++;
+				}
+			}
 		}
-		return triangles.size();
+		return count;
 	}
 
 }
