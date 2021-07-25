@@ -1,31 +1,42 @@
 package strings.easy;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class LongestCommonPrefix {
 
 	public static void main(String[] args) {
-
+		LongestCommonPrefix obj = new LongestCommonPrefix();
+		System.out.println(obj.longestCommonPrefix(new String[] {"flower","flow","flight"}));
+		System.out.println(obj.longestCommonPrefix(new String[] {"flower","flow","floyd"}));
+		System.out.println(obj.longestCommonPrefix(new String[] {"flower","flow",""}));
+		System.out.println(obj.longestCommonPrefix(new String[] {"dog","racecar","car"}));
 	}
 
 	public String longestCommonPrefix(String[] strs) {
-		StringBuilder common = new StringBuilder();
+		String shortestString = "";
 		if(strs!=null && strs.length>0) {
 			int n = strs.length;
-			int index = 0;
-			while(true) {
-				char ch = strs[0].charAt(index);
-				for(int i=1; i<n; i++) {
-					if(strs[i].length()>=index) {
-						if(ch!=strs[i].charAt(index)) {
+			shortestString = Arrays.stream(strs)
+					.sorted(Comparator.comparingInt(String::length))
+					.findFirst()
+					.orElse("");
+			for(int i=0; i<n; i++) {
+				String str = strs[i];
+				if(!shortestString.equals(str)) {
+					int commonIndex = 0;
+					for(int j=0; j<shortestString.length(); j++) {
+						if(str.charAt(j)!=shortestString.charAt(j)) {
 							break;
+						}else {
+							commonIndex++;
 						}
 					}
+					shortestString = shortestString.substring(0, commonIndex);
 				}
-				common.append(""+ch);
-				index++;
 			}
-			
 		}
-		return common.toString();
+		return shortestString;
 	}
 
 }
